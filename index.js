@@ -5,9 +5,9 @@ const { Server } = require('socket.io');
 const mineflayer = require('mineflayer');
 
 // Configuration using fallback defaults if environment variables aren't present
-const serverHost = process.env.SERVER_HOST || 'DOOMS_DAY_REBORN.aternos.me';
-const serverPort = parseInt(process.env.SERVER_PORT || '59173', 10);
-const botUsername = process.env.BOT_USERNAME || '247_Monitor';
+const serverHost = process.env.SERVER_HOST || 'ecilpse-smp.aternos.me'; // UPDATED FALLBACK
+const serverPort = parseInt(process.env.SERVER_PORT || '58226', 10);     // UPDATED FALLBACK
+const botUsername = process.env.BOT_USERNAME || 'bot01';                  // UPDATED FALLBACK
 const minecraftVersion = process.env.MC_VERSION || false;
 const reconnectInterval = parseInt(process.env.RECONNECT_INTERVAL_MS || '40000', 10);
 const antiAfkInterval = parseInt(process.env.ANTI_AFK_INTERVAL_MS || '20000', 10);
@@ -92,11 +92,11 @@ function createBot() {
   let newBot;
   try {
     newBot = mineflayer.createBot({
-      host: serverHost,            // FIX: Using variable instead of syntax-broken string
-      port: serverPort,            // FIX: Using variable instead of hardcoded number
-      username: botUsername,        // FIX: Using variable instead of syntax-broken string
+      host: serverHost,            
+      port: serverPort,            
+      username: botUsername,        
       version: minecraftVersion,
-      auth: 'offline',             // FIX: Set to 'offline' for cracked/Aternos servers
+      auth: 'offline',             
       hideErrors: false,
     });
   } catch (err) {
@@ -119,7 +119,7 @@ function createBot() {
     startAntiAfk();
   });
 
-  // FIX: AuthMe Auto-login handler
+  // AuthMe Auto-login handler
   bot.on('chat', (username, message) => {
     if (username === bot.username) return; 
     
