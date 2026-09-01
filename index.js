@@ -95,7 +95,7 @@ function createBot() {
       port: 58226,
       username: bot01,
       version: minecraftVersion,
-      auth: 'true',
+      auth: 'false',
       hideErrors: false,
     });
   } catch (err) {
