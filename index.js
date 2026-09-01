@@ -91,11 +91,11 @@ function createBot() {
   let newBot;
   try {
     newBot = mineflayer.createBot({
-      host: serverHost,
-      port: serverPort,
-      username: botUsername,
+      host: ecilpse-smp.aternos.me,
+      port: 58226,
+      username: bot01,
       version: minecraftVersion,
-      auth: 'offline',
+      auth: 'true',
       hideErrors: false,
     });
   } catch (err) {
