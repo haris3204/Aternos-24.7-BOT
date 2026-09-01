@@ -4,6 +4,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const mineflayer = require('mineflayer');
 
+// Configuration using fallback defaults if environment variables aren't present
 const serverHost = process.env.SERVER_HOST || 'DOOMS_DAY_REBORN.aternos.me';
 const serverPort = parseInt(process.env.SERVER_PORT || '59173', 10);
 const botUsername = process.env.BOT_USERNAME || '247_Monitor';
@@ -91,11 +92,11 @@ function createBot() {
   let newBot;
   try {
     newBot = mineflayer.createBot({
-      host: ecilpse-smp.aternos.me,
-      port: 58226,
-      username: bot01,
+      host: serverHost,            // FIX: Using variable instead of syntax-broken string
+      port: serverPort,            // FIX: Using variable instead of hardcoded number
+      username: botUsername,        // FIX: Using variable instead of syntax-broken string
       version: minecraftVersion,
-      auth: 'false',
+      auth: 'offline',             // FIX: Set to 'offline' for cracked/Aternos servers
       hideErrors: false,
     });
   } catch (err) {
@@ -116,6 +117,22 @@ function createBot() {
     console.log(`Bot "${bot.username}" spawned in the world.`);
     io.emit('bot_status', `Bot ${bot.username} spawned. Anti-AFK active.`);
     startAntiAfk();
+  });
+
+  // FIX: AuthMe Auto-login handler
+  bot.on('chat', (username, message) => {
+    if (username === bot.username) return; 
+    
+    const chatMessage = message.toLowerCase();
+    const myPassword = 'YourSecretPassword123'; // CHANGE THIS to your preferred bot password
+
+    if (chatMessage.includes('/register')) {
+      bot.chat(`/register ${myPassword} ${myPassword}`);
+      console.log('Bot sent registration command.');
+    } else if (chatMessage.includes('/login')) {
+      bot.chat(`/login ${myPassword}`);
+      console.log('Bot sent login command.');
+    }
   });
 
   bot.on('health', () => {
